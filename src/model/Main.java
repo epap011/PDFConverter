@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file2convert = new File("/home/ep327/Dev/Java/PDFConverter/test/test.txt"); //temp
+        File file2convert = new File("/home/ep327/Dev/Java/PDFConverter/test_files/test.txt"); //temp
         TxtToPdfConverter converter;
 
         try{
@@ -15,7 +15,7 @@ public class Main {
             converter.convert();
         }
         catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "File not Found!");
+            JOptionPane.showMessageDialog(null, e);
             System.exit(0);
         }
     }

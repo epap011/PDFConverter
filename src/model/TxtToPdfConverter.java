@@ -1,7 +1,6 @@
 package model;
 
 import java.io.*;
-import java.net.URL;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -12,26 +11,43 @@ import javax.swing.*;
 
 public class TxtToPdfConverter extends Converter {
 
-    private final BufferedReader fileToConvertReader;
-    private PdfWriter writer;
-    private PdfDocument convertedPdfFile;
-    private Document document;
-
     public TxtToPdfConverter(File file2Convert) throws FileNotFoundException {
         super(file2Convert);
-        fileToConvertReader = new BufferedReader(new FileReader(file2Convert));
-
-        writer = new PdfWriter("/home/ep327/Dev/Java/PDFConverter/test/test.pdf"); //temp
-        convertedPdfFile = new PdfDocument(writer);
-        document = new Document(convertedPdfFile);
     }
 
     public void convert() {
 
-        Paragraph para1 = new Paragraph("PDF Creation :)");
+        BufferedReader txtFileReader = null;
+        PdfWriter pdfWriter          = null;
+        PdfDocument convertedPdfFile = null;
+        Document document            = null;
 
-        convertedPdfFile.addNewPage();
-        document.add(para1);
-        document.close();
+        try {
+            txtFileReader       = new BufferedReader(new FileReader(getFileToConvert()));
+            pdfWriter           = new PdfWriter("/home/ep327/Dev/Java/PDFConverter/test_files/test.pdf"); //temp
+            convertedPdfFile    = new PdfDocument(pdfWriter);
+            document            = new Document(convertedPdfFile);
+
+            convertedPdfFile.addNewPage();
+
+            Paragraph parag = new Paragraph();
+            String line;
+            while((line = txtFileReader.readLine()) != null) parag.add(line + "\n");
+
+            document.add(parag);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        finally {
+
+            try{
+                txtFileReader.close();
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+            document.close();
+        }
     }
 }

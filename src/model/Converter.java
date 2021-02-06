@@ -1,12 +1,18 @@
 package model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public abstract class Converter {
 
     private final File fileToConvert;
 
-    public Converter(File fileToConvert) { this.fileToConvert = fileToConvert; }
+    public Converter(File fileToConvert) throws InvalidFileExtention, FileNotFoundException {
+
+        if(!fileToConvert.exists()) throw new FileNotFoundException();
+        if(!isFileExtensionValid(fileToConvert)) throw new InvalidFileExtention("invalid extension");
+        this.fileToConvert = fileToConvert;
+    }
 
     /**
      * PreConditions: The fileToConvert must be a .txt file
@@ -21,12 +27,22 @@ public abstract class Converter {
 
         ToConvertFileExtension[] allToConvertFileExtensions = ToConvertFileExtension.values();
         String nameOfFile = file.getName();
+        String extensionOfFile = null;
+
+        for(int i = 0; i < nameOfFile.length(); i++) {
+            if(nameOfFile.charAt(i) == '.') {
+                extensionOfFile = nameOfFile.substring(i+1);
+                break;
+            }
+        }
 
         for(ToConvertFileExtension ext : allToConvertFileExtensions) {
-            if(ext.toString().equals(nameOfFile)) return true;
+            if(ext.toString().equals(extensionOfFile)) {
+                return true;
+            }
         }
         return false;
     }
 
-    private File getFileToConvert() { return fileToConvert; }
+    public File getFileToConvert() { return fileToConvert; }
 }
