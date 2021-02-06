@@ -2,12 +2,15 @@ package model;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        File file2convert = new File("/home/ep327/Dev/Java/PDFConverter/test_files/test.txt"); //temp
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter .txt file full-path: ");
+        File file2convert = new File(sc.next()); //temp
         TxtToPdfConverter converter;
 
         try{
