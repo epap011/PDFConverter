@@ -3,10 +3,19 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * The abstract class Converter implements an application that converts
+ * a legitimate file to a pdf and the opposite.
+ */
 public abstract class Converter {
 
     private final File fileToConvert;
 
+    /**
+     * PreConditions : The file must exist and the extension must be valid
+     * PostConditions: The converting file has been initialized
+     * @param fileToConvert the converting file to a pdf
+     */
     public Converter(File fileToConvert) throws InvalidFileExtention, FileNotFoundException {
 
         if(!fileToConvert.exists()) throw new FileNotFoundException();
@@ -15,13 +24,13 @@ public abstract class Converter {
     }
 
     /**
-     * PreConditions: The fileToConvert must be a .txt file
+     * PreConditions : The converting file's extension must be legitimate
      * PostConditions: A new .pdf file has been created
      */
     public abstract void convert();
 
     /**
-     * Returns false if the file extension of this file is not valid, otherwise true
+     * PostConditions: Returns false if file's extension is invalid , otherwise true
      */
     public boolean isFileExtensionValid(File file) {
 
@@ -44,5 +53,8 @@ public abstract class Converter {
         return false;
     }
 
+    /**
+     * PostCondition: The converting file has been returned
+     */
     public File getFileToConvert() { return fileToConvert; }
 }
