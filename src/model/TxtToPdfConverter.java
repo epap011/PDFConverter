@@ -1,6 +1,7 @@
 package model;
 
 import java.io.*;
+import java.util.Scanner;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -22,9 +23,11 @@ public class TxtToPdfConverter extends Converter {
         PdfDocument convertedPdfFile = null;
         Document document            = null;
 
+        Scanner sc = new Scanner(System.in);
+
         try {
             txtFileReader       = new BufferedReader(new FileReader(getFileToConvert()));
-            pdfWriter           = new PdfWriter("/home/ep327/Dev/Java/PDFConverter/test_files/test.pdf"); //temp
+            pdfWriter           = new PdfWriter(sc.next()); //temp
             convertedPdfFile    = new PdfDocument(pdfWriter);
             document            = new Document(convertedPdfFile);
 
