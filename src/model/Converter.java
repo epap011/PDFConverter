@@ -9,16 +9,15 @@ import java.io.FileNotFoundException;
  */
 public abstract class Converter {
 
-    private final File fileToConvert;
+    private File fileToConvert;
 
     /**
      * PreConditions : The file must exist and the extension must be valid
      * PostConditions: The converting file has been initialized
      * @param fileToConvert the converting file to a pdf
      */
-    public Converter(File fileToConvert) throws InvalidFileExtention, FileNotFoundException {
+    public Converter(File fileToConvert) throws InvalidFileExtention {
 
-        if(!fileToConvert.exists()) throw new FileNotFoundException();
         if(!isFileExtensionValid(fileToConvert)) throw new InvalidFileExtention("invalid extension");
         this.fileToConvert = fileToConvert;
     }
@@ -57,4 +56,6 @@ public abstract class Converter {
      * PostCondition: The converting file has been returned
      */
     public File getFileToConvert() { return fileToConvert; }
+
+    public void setFileToConvert(File fileToConvert) {this.fileToConvert = fileToConvert; }
 }

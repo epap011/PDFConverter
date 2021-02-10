@@ -1,7 +1,6 @@
 package model;
 
 import java.io.*;
-import java.util.Scanner;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -19,7 +18,7 @@ public class TxtToPdfConverter extends Converter {
      * PostConditions: The converting file has been initialized
      * @param fileToConvert the .txt file
      */
-    public TxtToPdfConverter(File fileToConvert) throws FileNotFoundException {
+    public TxtToPdfConverter(File fileToConvert) {
         super(fileToConvert);
     }
 
@@ -34,14 +33,11 @@ public class TxtToPdfConverter extends Converter {
         BufferedReader txtFileReader = null;
         Document document            = null;
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter .pdf file full-path: ");
-
         try {
-            txtFileReader       = new BufferedReader(new FileReader(getFileToConvert()));
-            pdfWriter           = new PdfWriter(sc.next());
-            convertedPdfFile    = new PdfDocument(pdfWriter);
-            document            = new Document(convertedPdfFile);
+            txtFileReader    = new BufferedReader(new FileReader(getFileToConvert()));
+            pdfWriter        = new PdfWriter("C:\\Users\\bill0\\desktop\\Dev\\Java_stuff\\PDFConverter\\test_files\\new_test.pdf");
+            convertedPdfFile = new PdfDocument(pdfWriter);
+            document         = new Document(convertedPdfFile);
 
             convertedPdfFile.addNewPage();
 
@@ -55,7 +51,6 @@ public class TxtToPdfConverter extends Converter {
             System.out.println(e);
         }
         finally {
-
             try{
                 if(txtFileReader != null) txtFileReader.close();
                 if(document != null) document.close();
